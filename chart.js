@@ -3,9 +3,9 @@ import { humanDate, showTooltip, hideTooltip } from "./utils.js";
 
 export function drawChart(data) {
     const svg = d3.select("#chart");
-    const width = 688;  // updated width to match x-axis bar
-    const margin = { top: 50, right: 50, bottom: 50, left: 100 };
-    const rowHeight = 40;
+    const width = 900;  // updated width to match x-axis bar
+    const margin = { top: 50, right: 100, bottom: 50, left: 100 };
+    const rowHeight = 60;
 
     if (data.length === 0) {
         svg.selectAll("*").remove();
@@ -169,10 +169,10 @@ export function drawChart(data) {
 
     const storyTexts = [
         "There's more to do in the evening time!",
-        "Bangalore's arts scene is vibrant and growing.",
-        "Meetups and social events keep the community connected.",
-        "Fitness and wellness events are on the rise.",
-        "Food and drink festivals spice up the weekends."
+        "🎵 Bangalore loves its music! There's 374 music events in this list!",
+        "🧠 After music, Bengaluru loves learning new things the most, with Workshops accounting for 368 events!",
+        "🎭 Theatre is the 3rd largest event, with 355 listings here! Closely followed by Food/Drink.",
+        "The blank spaces are when the Putting Scene curators took breaks!"
     ];
 
     // Clear old story boxes if any
