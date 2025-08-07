@@ -3,8 +3,8 @@ import { humanDate, showTooltip, hideTooltip } from "./utils.js";
 
 export function drawChart(data) {
     const svg = d3.select("#chart");
-    const width = 1000;
-    const margin = { top: 50, right: 50, bottom: 50, left: 120 };
+    const width = 834;  // shifted width to 834px
+    const margin = { top: 50, right: 50, bottom: 50, left: 100 }; // left margin slightly smaller for shift left
     const rowHeight = 40;
 
     if (data.length === 0) {
@@ -17,12 +17,12 @@ export function drawChart(data) {
         return;
     }
 
-    // Unique dates sorted (all dates from data, fixed size)
+    // Unique dates sorted
     let uniqueDates = Array.from(new Set(data.map(d => d.dateObj.toDateString())))
         .map(d => new Date(d))
         .sort((a, b) => a - b);
 
-    // Fixed height for chart (all dates) - does not change on filter
+    // Fixed height for chart (all dates)
     const height = uniqueDates.length * rowHeight + margin.top + margin.bottom;
     svg.attr("width", width).attr("height", height);
 
@@ -123,7 +123,6 @@ export function drawChart(data) {
         .text(d => d.label);
 
     // Calculate dodge offsets for events that share the same time+date
-    // Group events by date+timeMinutes key
     const groupedEvents = {};
     data.forEach(d => {
         const key = d.dateObj.toDateString() + "-" + d.timeMinutes;
@@ -131,12 +130,10 @@ export function drawChart(data) {
         groupedEvents[key].push(d);
     });
 
-    // Max dodge count to scale offsets
     const maxDodge = 5;
     const dodgeWidth = 12;
     const dodgeHeight = 4;
 
-    // Map event to dodge index
     const eventDodgeIndex = new Map();
     Object.values(groupedEvents).forEach(events => {
         events.forEach((d, i) => {
@@ -144,7 +141,7 @@ export function drawChart(data) {
         });
     });
 
-    // Draw emoji marks with dodge offsets and drop shadow
+    // Draw emoji marks
     svg.selectAll(".event-dot")
         .data(data)
         .enter()
@@ -153,13 +150,11 @@ export function drawChart(data) {
         .attr("x", d => {
             const baseX = x(d.timeMinutes);
             const dodgeIndex = eventDodgeIndex.get(d);
-            // center dodge horizontally, limit max dodge count
             const offset = (dodgeIndex - (Math.min(groupedEvents[d.dateObj.toDateString() + "-" + d.timeMinutes].length, maxDodge) - 1) / 2) * dodgeWidth;
             return baseX + offset;
         })
         .attr("y", d => {
             const baseY = y(d.dateObj.toDateString()) + 5;
-            // slight vertical jitter for clarity
             const dodgeIndex = eventDodgeIndex.get(d);
             return baseY + ((dodgeIndex % 2) * dodgeHeight);
         })
@@ -184,7 +179,7 @@ export function drawChart(data) {
     // Clear old story boxes if any
     d3.select("#chart-wrapper").selectAll(".story-box").remove();
 
-    // Add floating story boxes positioned evenly in chart-wrapper relative to chart height
+    // Add floating story boxes positioned evenly, shifted to the right of chart
     const chartWrapper = d3.select("#chart-wrapper");
     const wrapperHeight = height + margin.top + margin.bottom;
 
@@ -192,11 +187,11 @@ export function drawChart(data) {
         chartWrapper.append("div")
             .attr("class", "story-box")
             .style("position", "absolute")
-            .style("left", "1050px")  // Just to the right of chart (adjust if needed)
+            .style("left", "880px")  // moved left compared to before, fits better with chart width 834px
             .style("top", `${margin.top + i * (wrapperHeight / storyTexts.length)}px`)
-            .style("max-width", "250px")
+            .style("max-width", "300px")  // increased width
             .style("padding", "10px 15px")
-            .style("background", "rgba(255, 255, 255, 0.9)")
+            .style("background", "rgba(255, 255, 255, 0.95)")
             .style("border-radius", "8px")
             .style("box-shadow", "0 2px 8px rgba(0,0,0,0.1)")
             .style("opacity", "0")
