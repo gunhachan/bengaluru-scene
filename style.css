@@ -31,10 +31,10 @@ p {
 
 /* Chart container centering */
 #chart-wrapper {
-    width: 834px;
-    /* changed width */
+    width: 1000px;
     margin: 0 auto;
     position: relative;
+    overflow: visible;
 }
 
 /* Filter bar */
@@ -50,7 +50,6 @@ p {
     z-index: 1001;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
     height: 71.2px;
-    /* exact height to match your mention */
 }
 
 .filter-button {
@@ -72,16 +71,16 @@ p {
     color: white;
 }
 
-/* New X axis bar below filter */
+/* X axis bar below filter bar, not overlapping it */
 .x-axis-bar {
     position: sticky;
     top: 71.2px;
-    /* below filter bar exactly */
+    /* just below filter bar */
     background: white;
     border-bottom: 1px solid #ddd;
     padding: 0.3em 0;
-    width: 834px;
-    /* fixed width */
+    width: 688px;
+    /* updated width */
     max-width: 100%;
     display: flex;
     justify-content: space-between;
@@ -89,6 +88,7 @@ p {
     font-weight: 600;
     user-select: none;
     z-index: 1000;
+    /* below filter bar */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     margin: 0 auto;
 }
@@ -136,4 +136,17 @@ p {
 .x-axis line,
 .y-axis line {
     stroke: #cccccc;
+}
+
+/* Weekly grid lines (dashed) */
+.grid-line {
+    stroke: #ddd;
+    stroke-dasharray: 4 4;
+}
+
+/* Midday vertical dashed line */
+.midday-line {
+    stroke: #999;
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
 }

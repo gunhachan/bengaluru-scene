@@ -3,8 +3,8 @@ import { humanDate, showTooltip, hideTooltip } from "./utils.js";
 
 export function drawChart(data) {
     const svg = d3.select("#chart");
-    const width = 834;  // shifted width to 834px
-    const margin = { top: 50, right: 50, bottom: 50, left: 100 }; // left margin slightly smaller for shift left
+    const width = 688;  // updated width to match x-axis bar
+    const margin = { top: 50, right: 50, bottom: 50, left: 100 };
     const rowHeight = 40;
 
     if (data.length === 0) {
@@ -45,7 +45,7 @@ export function drawChart(data) {
         .attr("height", height)
         .attr("fill", "white");
 
-    // Midday line (12:00)
+    // Midday vertical dashed line at 12:00
     svg.append("line")
         .attr("class", "midday-line")
         .attr("x1", x(12 * 60))
@@ -71,7 +71,7 @@ export function drawChart(data) {
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(xAxis);
 
-    // Weekly grid lines & ticks
+    // Weekly grid lines every 7 days
     const firstDate = uniqueDates[0];
     const weeklyTicks = uniqueDates.filter(date => {
         const diffDays = Math.round((date - firstDate) / (1000 * 60 * 60 * 24));
@@ -79,7 +79,6 @@ export function drawChart(data) {
     });
     const yTicks = weeklyTicks.map(d => d.toDateString());
 
-    // Grid lines every week
     svg.selectAll(".grid-line")
         .data(yTicks)
         .enter()
@@ -187,9 +186,9 @@ export function drawChart(data) {
         chartWrapper.append("div")
             .attr("class", "story-box")
             .style("position", "absolute")
-            .style("left", "880px")  // moved left compared to before, fits better with chart width 834px
+            .style("left", "800px")
             .style("top", `${margin.top + i * (wrapperHeight / storyTexts.length)}px`)
-            .style("max-width", "300px")  // increased width
+            .style("width", "350px")
             .style("padding", "10px 15px")
             .style("background", "rgba(255, 255, 255, 0.95)")
             .style("border-radius", "8px")
@@ -219,4 +218,5 @@ export function drawChart(data) {
 
     storyBoxes.forEach(box => observer.observe(box));
 }
+
 

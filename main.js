@@ -41,7 +41,7 @@ function renderFilterBar() {
     });
 }
 
-// Render sticky X axis bar below filter bar, width fixed at 834px and positioned below 71.2px filter bar height
+// Render sticky X axis bar below filter bar, width fixed at 688px, centered horizontally
 function renderXAxisBar() {
     const xAxisBar = d3.select("#x-axis-bar");
     const times = [];
@@ -58,10 +58,13 @@ function renderXAxisBar() {
         .style("text-align", (d, i) => (i === 0 ? "left" : i === times.length - 1 ? "right" : "center"))
         .text(d => d);
 
-    // Set fixed width and margin to center
-    xAxisBar.style("width", "834px")
+    // Fixed width 688px and centered horizontally with margin auto, positioned below filter bar
+    xAxisBar.style("width", "688px")
         .style("margin", "0 auto")
-        .style("top", "71.2px"); // set from CSS too, but here ensures inline style
+        .style("top", "71.2px");
+
+    console.log("xAxisBar width set to:", xAxisBar.style("width"));
+    console.log("xAxisBar top set to:", xAxisBar.style("top"));
 }
 
 function updateMarkOpacity() {
@@ -87,4 +90,6 @@ d3.csv("data.csv").then(data => {
         renderXAxisBar();
     });
 });
+
+
 
