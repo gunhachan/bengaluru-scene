@@ -1,0 +1,167 @@
+/* General styling */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: white;
+    margin: 0;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    padding: 2em 1em;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.5em;
+    max-width: 700px;
+    margin: 0 auto 2em;
+}
+
+/* Chart container centering */
+#chart-wrapper {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Filter bar */
+.filter-bar {
+    position: sticky;
+    top: 0;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 0.6em 1em;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+}
+
+.filter-button {
+    border: none;
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    background-color: #eee;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background-color 0.3s, color 0.3s;
+    user-select: none;
+}
+
+.filter-button.active {
+    background-color: black;
+    color: white;
+}
+
+/* New X axis bar below filter */
+.x-axis-bar {
+    position: sticky;
+    top: 48px;
+    /* height of filter bar + a little spacing */
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 0.3em 0;
+    width: 1000px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    user-select: none;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 0.7em;
+    border-radius: 8px;
+    font-size: 0.85em;
+    line-height: 1.4em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 220px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+/* Y Axis day numbers */
+.y-label {
+    fill: black;
+    font-weight: normal;
+    font-size: 12px;
+    user-select: none;
+}
+
+/* Month/Year labels */
+.month-label {
+    font-weight: bold;
+    font-size: 14px;
+    text-anchor: start;
+    fill: black;
+    user-select: none;
+    pointer-events: none;
+    /* Move slightly left to avoid overlap with day numbers */
+    transform: translateX(-12px);
+    position: sticky;
+    background: white;
+}
+
+/* X axis lines */
+.x-axis line,
+.y-axis line {
+    stroke: #ccc;
+}
+
+/* Grid lines */
+.grid-line {
+    stroke: #ddd;
+    stroke-dasharray: 4 4;
+}
+
+/* Midday dashed line */
+.midday-line {
+    stroke: #999;
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+}
+
+/* Emoji marks */
+.event-dot {
+    cursor: pointer;
+    user-select: none;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.15));
+    transition: opacity 0.3s ease;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'NotoColorEmoji', 'Segoe UI Symbol', 'Android Emoji', 'EmojiSymbols', sans-serif;
+}
+
+/* Scrollbar top fix */
+body>.filter-bar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+    background: white;
+}
+
+/* Remove extra bottom space */
+#chart {
+    display: block;
+}
