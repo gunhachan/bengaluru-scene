@@ -170,4 +170,58 @@ export function drawChart(data) {
             showTooltip(event, d);
         })
         .on("mouseout", hideTooltip);
+
+    // --- Floating story text boxes ---
+
+    const storyTexts = [
+        "There's more to do in the evening time!",
+        "Bangalore's arts scene is vibrant and growing.",
+        "Meetups and social events keep the community connected.",
+        "Fitness and wellness events are on the rise.",
+        "Food and drink festivals spice up the weekends."
+    ];
+
+    // Clear old story boxes if any
+    d3.select("#chart-wrapper").selectAll(".story-box").remove();
+
+    // Add floating story boxes positioned evenly in chart-wrapper relative to chart height
+    const chartWrapper = d3.select("#chart-wrapper");
+    const wrapperHeight = height + margin.top + margin.bottom;
+
+    storyTexts.forEach((text, i) => {
+        chartWrapper.append("div")
+            .attr("class", "story-box")
+            .style("position", "absolute")
+            .style("left", "1050px")  // Just to the right of chart (adjust if needed)
+            .style("top", `${margin.top + i * (wrapperHeight / storyTexts.length)}px`)
+            .style("max-width", "250px")
+            .style("padding", "10px 15px")
+            .style("background", "rgba(255, 255, 255, 0.9)")
+            .style("border-radius", "8px")
+            .style("box-shadow", "0 2px 8px rgba(0,0,0,0.1)")
+            .style("opacity", "0")
+            .style("transition", "opacity 0.6s ease")
+            .text(text);
+    });
+
+    // Intersection observer to fade in story boxes on scroll
+    const storyBoxes = document.querySelectorAll(".story-box");
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+            } else {
+                entry.target.style.opacity = "0";
+            }
+        });
+    }, options);
+
+    storyBoxes.forEach(box => observer.observe(box));
 }
+

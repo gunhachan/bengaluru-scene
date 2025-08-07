@@ -57,6 +57,11 @@ function renderXAxisBar() {
         .style("flex", "1")
         .style("text-align", (d, i) => (i === 0 ? "left" : i === times.length - 1 ? "right" : "center"))
         .text(d => d);
+
+    // Dynamically set width to match #chart-wrapper width and center horizontally
+    const wrapperWidth = document.getElementById("chart-wrapper").clientWidth;
+    xAxisBar.style("width", wrapperWidth + "px")
+        .style("margin", "0 auto");
 }
 
 function updateMarkOpacity() {
@@ -76,5 +81,10 @@ d3.csv("data.csv").then(data => {
     renderXAxisBar();
     drawChart(allData);
     updateMarkOpacity();
+
+    // Update X axis bar width on window resize
+    window.addEventListener("resize", () => {
+        renderXAxisBar();
+    });
 });
 
